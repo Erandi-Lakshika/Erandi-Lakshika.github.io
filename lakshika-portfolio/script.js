@@ -233,3 +233,56 @@ revealElements.forEach((element) => {
     observer.observe(element);
 
 });
+
+
+
+/* =========================================================
+   PROJECT GALLERY (SLIDER)
+========================================================= */
+
+document.querySelectorAll(".project-gallery").forEach((gallery) => {
+
+    const track = gallery.querySelector(".gallery-track");
+    const prevBtn = gallery.querySelector(".gallery-prev");
+    const nextBtn = gallery.querySelector(".gallery-next");
+    const dots = gallery.querySelectorAll(".gallery-dot");
+
+    if (!track) return;
+
+    if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+            track.scrollBy({
+                left: -track.clientWidth,
+                behavior: "smooth"
+            });
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+            track.scrollBy({
+                left: track.clientWidth,
+                behavior: "smooth"
+            });
+        });
+    }
+
+    if (dots.length > 0) {
+        track.addEventListener("scroll", () => {
+            const index = Math.round(track.scrollLeft / track.clientWidth);
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("active", i === index);
+            });
+        });
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener("click", () => {
+                track.scrollTo({
+                    left: i * track.clientWidth,
+                    behavior: "smooth"
+                });
+            });
+        });
+    }
+
+});
